@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>{{project?.name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<style>
+.project-bar {
+ height: 80px;
+ text-align: center !important;
+}
+.project-bar-column {
+ background: #eee!important;
+ text-align: center !important;
+ border-right: 4px solid #fff;
+}
+</style>
+
+
+ <ion-content class="outer-content" style="background:#eee">
+   <ion-card>
+     <ion-card-content>
+     <ion-item no-lines row-no-padding>
+       <ion-icon name="calendar"></ion-icon>
+       Target: {{project?.scheduleFinish | date:"dd'-'MM'-'yyyy"}}
+       <button [class.hide]="project?.scheduleToBaseline"   button-positive item-right>ON TRACK</button>
+       <button [class.hide]="!project?.scheduleToBaseline"  danger item-right>LATE</button>
+     </ion-item>
+
+       <ion-row class="project-bar">
+         <ion-col class="project-bar-column">
+           <p><b>ESTIMATED</b></p>
+           <p style=" font-size: 1.5em!important;">{{project?.totalLaborEffort | ShortNumber}}H</p>
+         </ion-col>
+         <ion-col class="project-bar-column">
+           <p><b>ACTUALS</b></p>
+           <p style=" font-size: 1.5em!important;">{{project?.actuals | ShortNumber}}H</p>
+         </ion-col>
+         <ion-col class="project-bar-column">
+           <p><b>ETC HOURS</b></p>
+           <p style=" font-size: 1.5em!important;">{{project?.etc | ShortNumber}}H</p>
+         </ion-col>
+       </ion-row>
+
+
+     <br>
+     <p><b>Manager</b></p>
+     {{project?.manager?.displayValue}}
+     <br>
+     <p><b>Objective</b></p>
+     {{project?.objective}}
+     </ion-card-content>
+   </ion-card>
+
+    <ion-list >
+      <ion-list-header>Milestones</ion-list-header>
+      <ion-item>
+       <ul class="cbp_tmtimeline">
+         <li *ngFor="let mile of milestones" [class.hide]="!milestones?.length"  >
+           <time class="cbp_tmtime" datetime="2013-04-10 18:30">
+             <span>{{mile?.finishDate }}</span>
+           </time>
+           <div class="cbp_tmlabel">
+             {{mile?.name}}
+           </div>
+         </li>
+       </ul>
+     </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,89 @@
+<ion-content class="home">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list >
+    <ion-list-header color="primary">Pending Approvals</ion-list-header>
+    <ion-item-sliding *ngFor="let item of actionItems">
+      <ion-item>
+        {{item.subject}}
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="lightGreen" (click)="approvalResponse('Approve', 'APPROVE', item)">
+          <ion-icon name="thumbs-up"></ion-icon>
+        </button>
+        <button ion-button color="lightYellow" (click)="approvalResponse('Set Incomplete', 'INCOMPLETE', item)">
+          <ion-icon name="return-left"></ion-icon>
+        </button>
+        <button ion-button color="lightRed"  (click)="approvalResponse('Reject', 'REJECT', item)">
+          <ion-icon name="thumbs-down"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <!--My Projects Card -->
+  <ion-card *ngFor="let prj of projects" nopadding >
+    <ion-card-header>{{prj.name}}</ion-card-header>
+    <div class="widget doughnut" >
+      <ion-slides pager  class="canvas-container">
+        <ion-slide>
+          <canvas baseChart class="chart"
+                          [data]="[prj.percentComplete, 1-prj.percentComplete]"
+                          [labels] = "['Completed', 'To go']"
+                          [options]="chartOptions"
+                          [chartType]="doughnutChartType"
+                          [colors]="doughnutChartColors"></canvas>
+                          <span class="status">{{prj.percentComplete * 100}}% <p>Completed</p></span>
+        </ion-slide>
+        <ion-slide>
+          <canvas baseChart class="chart"
+                        [data]= "[prj.actuals, prj.etcLabor]"
+                        [labels] = "['actuals', 'etc']"
+                        [options]="chartOptions"
+                        [chartType]="doughnutChartType"
+                        [colors]="doughnutChartColors"></canvas>
+                        <span class="status">{{prj.actuals | ShortNumber}}h<p>Worked</p></span>
+        </ion-slide>
+        <ion-slide>
+          <canvas baseChart class="chart"
+                        [data]="[prj.actualsCost.amount, prj.budgetCostTotal.amount- prj.actualsCost.amount]"
+                        [labels] = "['actuals', 'remaing budget']"
+                        [options]="chartOptions"
+                        [chartType]="doughnutChartType"
+                        [colors]="doughnutChartColors"></canvas>
+                        <span class="status">$ {{prj.actualsCost.amount | ShortNumber}}<p>Spent</p></span>
+        </ion-slide>
+      </ion-slides>
+
+    </div>
+
+    <ion-card-content >
+      <ion-icon name="person"></ion-icon> {{prj.manager.displayValue}}
+        <p><ion-icon name="calendar"></ion-icon> {{prj.scheduleFinish | date:"dd'-'MM'-'yyyy" }}</p>
+    </ion-card-content>
+
+    <div style="background-color:#95a5a6; color:#fff" >
+      <ion-row >
+        <ion-col center text-center><div>Schedule</div></ion-col>
+        <ion-col center text-center><div>Budget</div></ion-col>
+        <ion-col center text-center><div>Effort</div></ion-col>
+      </ion-row>
+
+      <ion-row >
+        <ion-col center text-center >
+          <h2><ion-icon [name]="getStatusIndicatorIcon(prj.scheduleVariancePercent)"  [style.color]="getStatusIndicatorColor(prj.scheduleVariancePercent)" ></ion-icon></h2>
+        </ion-col>
+        <ion-col center text-center >
+          <h2><ion-icon [name]="getStatusIndicatorIcon(prj.projectedCostVariancePercent)"  [style.color]="getStatusIndicatorColor(prj.projectedCostVariancePercent)" ></ion-icon></h2>
+        </ion-col>
+        <ion-col center text-center >
+          <h2><ion-icon [name]="getStatusIndicatorIcon(prj.projectedEffortVariancePercent)"  [style.color]="getStatusIndicatorColor(prj.projectedEffortVariancePercent)" ></ion-icon></h2>
+        </ion-col>
+      </ion-row>
+    </div>
+
+  </ion-card>
+
+</ion-content>

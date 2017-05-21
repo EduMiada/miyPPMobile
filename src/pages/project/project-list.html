@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>Projects</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content #ProjectList>
+  <ion-card *ngFor="let prj of projects"  #slidingItem [attr.track]="ionic" >
+    <ion-card-content (click)="viewProject(prj)">
+      <h3>{{prj.name}}</h3>
+      <p>{{prj.code}} - {{prj?.scheduleFinish | date:"dd'-'MM'-'yyyy"}}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,55 @@
+.home {
+  background-color: #fafafa
+}
+.chart {
+display: block;
+width:100%!important;
+height:100%!important;
+//background-color: blue;
+//height: 15%!important;
+}
+
+/* various containers */
+// .container {
+//  width: 200px;
+//  margin: 0 auto;
+// }
+.canvas-container {
+ min-height: 30%;
+ max-height: 30%;
+// background-color: #86898C;
+ position: relative;
+}
+
+.widget {
+ position: relative;
+ //margin-bottom: 80px;
+ //background: #efefef;
+ padding: 12px;
+ //margin-bottom: 30px;
+ -webkit-box-sizing: border-box;
+ -moz-box-sizing: border-box;
+ box-sizing: border-box;
+//  background-color: yellow;
+}
+
+.widget.doughnut .status {
+display: block;
+ position: absolute;
+ top: 47%;
+ left: 50%;
+ width: 30%;
+ height: 0;
+ padding-top: 12%;
+ padding-bottom: 18%;
+ color: #000;
+ margin-top: -15%;
+ margin-left: -15%;
+ //font-size: 1.4em;
+ //font-weight: 700;
+ text-align: center;
+ border-radius: 50%;
+ background-size: 30%;
+ background-position: center;
+// background-color: #656323;
+}
